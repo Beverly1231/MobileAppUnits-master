@@ -1,32 +1,21 @@
 package com.example.iuliu.aa;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
+/**
+ * Created by 46014 on 2016/11/15.
+ */
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.preference.PreferenceActivity;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.*;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.*;
-import org.json.JSONStringer;
+import org.json.JSONObject;
 import org.json.XML;
-
+import com.example.iuliu.aa.Employees;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -34,72 +23,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
 
-public class RESTfulActivity extends FragmentActivity {
-
-    private ProgressDialog pgd;
-    private TextView txtview;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restful);
-        txtview = (TextView) findViewById(R.id.textView);
-
-    }
-
-    public void BacktoCar(View v){
-        Intent intent = new Intent (RESTfulActivity.this, CalendarActivity.class);
-        startActivity(intent);
-    }
-
-    public void Send(View v){
-        System.out.println("123432435345");
-        new Tasklogin().execute();
-    }
-
-    public void Get(View v){
-        RetrieveFromServer cnt = new RetrieveFromServer();
-    }
-
-    public class Tasklogin extends AsyncTask<String, Void, Integer>{
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pgd = ProgressDialog.show(RESTfulActivity.this,"Please wait...","Processing...",true);
-        }
-
-
-        @Override
-        protected Integer doInBackground(String... params) {
-            Map<String,String> param = new HashMap<>();
-            JSONObject jsonObject;
-            try{
-                getJSONStringFromUrl_GET("http://192.168.1.9:8080/MainServerREST-master/api/employees/email/33@mail.com");
-                //System.out.println(res);
-                //parseInformationFromArray(res);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-            pgd.dismiss();
-        }
-    }
-
-
-    //--------------------------------------------------------------------------------------------------------
+public class AccessServiceAPI {
 
     /**
      * Call service api with GET method and then return result form service as json string
@@ -110,6 +39,7 @@ public class RESTfulActivity extends FragmentActivity {
         Gson gson = new Gson();
         JsonArray jsonArray = null;
         HttpURLConnection httpURLConnection = null;
+
         BufferedReader bufferedReader = null;
         StringBuilder stringBuilder;
         String line;
@@ -130,11 +60,10 @@ public class RESTfulActivity extends FragmentActivity {
             JSONObject obj = XML.toJSONObject(xmlString);
             System.out.println(obj);
             emp = gson.fromJson(obj.toString(),Employees.class);
-            //emp = gson.fromJson(obj.toString(),Employees.class);
             System.out.println(emp);
 
-            JsonElement Firstname = (JsonObject)obj.get("empFirstname");
-            JsonElement lastName = (JsonObject) obj.get("empLastname");
+            JsonElement Firstname = (JsonElement) obj.get("empFirstname");
+            JsonElement lastName = (JsonElement) obj.get("empLastname");
             System.out.println("Found the information(example) " + "FirstName = " +Firstname + " LastName = " + lastName);
             //convert2emp(bufferedReader);
 
@@ -333,7 +262,4 @@ public class RESTfulActivity extends FragmentActivity {
         return jsonString;
     }
 }
-
-
-
 

@@ -14,7 +14,7 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        setTitle("Active Ageing Montly Schedule");
+        setTitle("Active Ageing Monthly Schedule");
 
 
         calendar=(CalendarView) findViewById(R.id.calendarView);
@@ -22,6 +22,8 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth){
                 Toast.makeText(getApplicationContext(), dayOfMonth+"/"+month+"/"+year,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(CalendarActivity.this, DisplayScheduleActivity.class);
+                startActivity(intent);
             }
         }
 

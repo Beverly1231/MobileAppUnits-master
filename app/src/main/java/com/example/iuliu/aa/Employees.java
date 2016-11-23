@@ -25,7 +25,7 @@ public class Employees implements Serializable {
 
     private String empPassword;
 
-    private Integer managersID;
+    private Managers managersManId;
 
     public Employees() {
     }
@@ -34,7 +34,7 @@ public class Employees implements Serializable {
         this.empId = empId;
     }
 
-    public Employees(Integer empId, String empFirstname, String empLastname, String empUsername, String empPassword, String empEmail, String empPhone, Integer managersID, boolean empRegistered) {
+    public Employees(Integer empId, String empFirstname, String empLastname, String empUsername, String empPassword, String empEmail, String empPhone, Managers managersManId, boolean empRegistered) {
         this.empId = empId;
         this.empFirstname = empFirstname;
         this.empLastname = empLastname;
@@ -42,7 +42,7 @@ public class Employees implements Serializable {
         this.empPassword = empPassword;
         this.empEmail = empEmail;
         this.empPhone = empPhone;
-        this.managersID = managersID;
+        this.managersManId = new Managers(1,"Binx","Chenx","binchenm","33333","44@gmail.com","55555");
         this.empRegistered = empRegistered;
     }
 
@@ -102,13 +102,13 @@ public class Employees implements Serializable {
         this.empPhone = empPhone;
     }
 
-    public Integer getManagersID() {
-        return managersID;
-    }
+    //public Managers getManagersID() {
+    //    return managersID;
+    //}
 
-    public void setManagersID(Integer managersID) {
-        this.managersID = managersID;
-    }
+    //public void setManagersID(Integer managersID) {
+    //    this.managersID = managersID;
+    //}
 
     public boolean getEmpRegistered() {
         return empRegistered;
@@ -142,5 +142,6 @@ public class Employees implements Serializable {
     public String toString() {
         return "entities.Employees[ empId=" + empId + " ]";
     }
+
 
 }
